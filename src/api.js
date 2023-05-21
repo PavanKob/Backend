@@ -14,11 +14,11 @@ const db = mysql.createConnection({
     database:'sql12619557'
 });
 
-app.get('/',(re, res)=>{
+router.get('/',(re, res)=>{
     return res.json("From Backend side");
 });
 
-app.get('/employees',(req, res)=>{
+router.get('/employees',(req, res)=>{
     const sql = "select * from Employee";
     db.query(sql,(err, data)=>{
         if(err) return res.json(err);
@@ -30,5 +30,6 @@ app.get('/employees',(req, res)=>{
 app.listen(8081, () =>{
     console.log("listening");
 })
-app.use('./netlify/functions/server',router);
+app.use('/.netlify/functions/api',router);
+module.exports=app;
 module.exports.handler = serverless(app);
